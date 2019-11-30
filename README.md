@@ -81,6 +81,9 @@ class Ship : Vehicle() {
 * Constructor Injection
 * Property Injection
 
+## Branch Note
+* release-0.1 The simplest
+
 ## Library
 * Android
 * GSON
@@ -92,5 +95,5 @@ class Ship : Vehicle() {
 
 
 #### Log
-created 1 December 2019
+* created 1 December 2019
 tobe update
