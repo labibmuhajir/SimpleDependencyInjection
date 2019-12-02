@@ -11,6 +11,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var movieRepository: MovieDataSource //can not be private
+    @Inject("cinema")
+    lateinit var cinema: String
+    @Inject("address")
+    lateinit var address: String
+
     private val adapter by lazy { MovieAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+        tvCinemaValue.text = cinema
+        tvAddress.text = address
         val movies = movieRepository.getPopularMovies()
         adapter.addItems(movies)
     }

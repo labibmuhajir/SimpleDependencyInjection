@@ -8,10 +8,12 @@ import com.github.labibmuhajir.di.repositoryModule
 class DiApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        InjectEngine.modules.apply {
-            add(applicationContext)
-            addAll(appModule)
-            addAll(repositoryModule)
+        InjectEngine.applicationContext = applicationContext
+        InjectEngine.apply {
+            addModules(appModule)
+            addModules(repositoryModule)
+            addSpecificModule("cinema", "big screen cinema")
+            addSpecificModule("address", "jakarta")
         }
     }
 }
