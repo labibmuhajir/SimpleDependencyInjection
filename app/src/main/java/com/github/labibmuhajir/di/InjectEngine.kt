@@ -15,7 +15,7 @@ object InjectEngine {
     lateinit var applicationContext: Context
     var specificContext: Context? = null
 
-    val modules = mutableSetOf<ProvidedObject<Any>>()
+    val modules = mutableSetOf<ProvidedObject>()
 
     fun inject(obj: Any) {
         if (Context::class.java.isAssignableFrom(obj::class.java)) {
@@ -79,4 +79,4 @@ object InjectEngine {
 
 }
 
-data class ProvidedObject<T>(val instance: T, val name: String = "")
+data class ProvidedObject(val instance: Any, val name: String = "")
