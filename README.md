@@ -82,6 +82,7 @@ class Ship : Vehicle() {
 * Property Injection
 
 ## Branch Note
+* release-0.2 Injection with qualifier
 * release-0.1 The simplest
 
 ## Library
@@ -93,7 +94,10 @@ class Ship : Vehicle() {
 * <a href="https://en.wikipedia.org/wiki/Dependency_injection">Wikipedia</a>
 * <a href="https://stackoverflow.com/questions/130794/what-is-dependency-injection">Stackoverflow</a>
 
+#### InjectEngine Documentation
+<a href="InjectEngineDoc.md">documentation</a>
 
 #### Log
+* add qualifier 3 December 2019
 * created 1 December 2019
 tobe update
