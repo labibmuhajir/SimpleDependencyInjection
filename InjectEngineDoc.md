@@ -60,7 +60,7 @@ InjectEngine.addSpecificModule("your specific name", module)
 ```
 
 ### How to inject
-####Constructor Injection
+#### Constructor Injection
 ```kotlin
 Repository(getInjection("your specific name"))
 ```

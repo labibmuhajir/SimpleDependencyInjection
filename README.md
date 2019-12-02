@@ -94,7 +94,7 @@ class Ship : Vehicle() {
 * <a href="https://stackoverflow.com/questions/130794/what-is-dependency-injection">Stackoverflow</a>
 
 #### InjectEngine Documentation
-<a href="SimpleDependencyInjection/InjectEngineDoc.md">documentation</a>
+<a href="InjectEngineDoc.md">documentation</a>
 
 #### Log
 * add qualifier 3 December 2019
