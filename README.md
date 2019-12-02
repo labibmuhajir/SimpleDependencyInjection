@@ -82,6 +82,7 @@ class Ship : Vehicle() {
 * Property Injection
 
 ## Branch Note
+* release-0.2 Injection with qualifier
 * release-0.1 The simplest
 
 ## Library
