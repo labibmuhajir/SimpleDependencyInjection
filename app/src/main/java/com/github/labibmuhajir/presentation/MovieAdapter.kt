@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.labibmuhajir.R
-import com.github.labibmuhajir.data.entity.Movie
+import com.github.labibmuhajir.domain.entity.Movie
 import com.github.labibmuhajir.ext.inflate
 import kotlinx.android.synthetic.main.view_holder_movie.view.*
 

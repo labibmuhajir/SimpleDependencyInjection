@@ -1,7 +1,7 @@
 package com.github.labibmuhajir.data.datasource
 
-import com.github.labibmuhajir.data.entity.Movie
+import com.github.labibmuhajir.data.api.response.PageableResponse
 
 interface MovieDataSource {
-    fun getPopularMovies(): List<Movie>
+    suspend fun getPopularMovies(page: Int): PageableResponse
 }
