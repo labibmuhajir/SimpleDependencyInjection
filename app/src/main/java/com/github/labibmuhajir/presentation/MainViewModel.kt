@@ -12,12 +12,9 @@ class MainViewModel(private val movieRepository: MovieDataSource) : ViewModel() 
     private var page = 1
     val movieState = MutableLiveData<ViewState<List<Movie>>>()
 
-    init {
-        getMovies()
-    }
-
     fun getMovies() {
         viewModelScope.launch {
+            movieState.postValue(ViewState.Loading())
             try {
                 val response = movieRepository.getPopularMovies(page)
                 if (response.totalPages ?: 0 > page) page++

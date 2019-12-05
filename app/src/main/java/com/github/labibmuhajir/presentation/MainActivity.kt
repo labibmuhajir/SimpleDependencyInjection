@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupView()
         initData()
+        startObserve()
     }
 
     private fun setupView() {
@@ -35,8 +36,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
+        mainViewModel.getMovies()
+
         tvCinemaValue.text = cinema
         tvAddress.text = address
+    }
+
+    private fun startObserve() {
         mainViewModel.movieState.observe(this, Observer { state ->
             when (state) {
                 is ViewState.Success -> {

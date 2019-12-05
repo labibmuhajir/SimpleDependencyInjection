@@ -62,6 +62,10 @@ object InjectEngine {
         }
     }
 
+    fun resetInjection() {
+        modules.clear()
+    }
+
     inline fun <reified T : Any> getInjection(name: String? = ""): T {
         val type = T::class.java
 
