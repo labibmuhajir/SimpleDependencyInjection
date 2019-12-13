@@ -56,3 +56,6 @@ later in lifecycle onCreate or whatever you want use inject method
 ```kotlin
 InjectEngine.inject(this)
 ```
+
+## Known Bugs
+- Can't define ProvidedObject with dependencies on one list module
