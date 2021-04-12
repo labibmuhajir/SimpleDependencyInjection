@@ -1,6 +1,8 @@
 package com.github.labibmuhajir.di
 
 import android.content.Context
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 /**
  * Created by labibmuhajir@yahoo.com
@@ -12,14 +14,27 @@ import android.content.Context
 annotation class Inject(val name: String = "")
 
 object InjectEngine {
+    const val ACTIVITY = "activity"
+    const val FRAGMENT = "fragment"
+
     lateinit var applicationContext: Context
     var specificContext: Context? = null
+    lateinit var fragment: Fragment
+    lateinit var activity: FragmentActivity
 
     val modules = mutableSetOf<ProvidedObject>()
 
     fun inject(obj: Any) {
         if (Context::class.java.isAssignableFrom(obj::class.java)) {
             specificContext = obj as Context
+        }
+
+        if (obj is FragmentActivity) {
+            activity = obj
+        }
+
+        if (obj is Fragment) {
+            fragment = obj
         }
 
         obj.javaClass.declaredFields.forEach { property ->
@@ -33,11 +48,13 @@ object InjectEngine {
                         )
                     } else {
                         modules.find { providedObject ->
-                            val singletonType = providedObject.instance.javaClass
-
-                            type.isAssignableFrom(singletonType) && injection.name == providedObject.name
+                            type.isAssignableFrom(providedObject.clazz) && injection.name == providedObject.name
                         }?.let { providedObject ->
-                            propertyTobeInject.set(obj, providedObject.instance)
+                            propertyTobeInject.set(
+                                obj,
+                                if (providedObject.instance is Lazy<*>) providedObject.instance.value
+                                else providedObject.instance
+                            )
                         }
                     }
                 }
@@ -45,38 +62,35 @@ object InjectEngine {
         }
     }
 
-    fun addModules(modules: List<Any>) {
-        modules.forEach {
-            this.modules.add(ProvidedObject(it))
-        }
-    }
-
-    fun addModule(module: Any) {
-        this.modules.add(ProvidedObject(module))
-    }
-
-    fun addSpecificModule(name: String, module: Any) {
-        this.modules.add(ProvidedObject(module, name))
-    }
-
-    fun addSpecificModules(modules: List<Pair<String, Any>>) {
-        modules.forEach {
-            this.modules.add(ProvidedObject(it.second, it.first))
-        }
+    fun resetInjection() {
+        modules.clear()
     }
 
     inline fun <reified T : Any> getInjection(name: String? = ""): T {
         val type = T::class.java
 
-        return if (type.isAssignableFrom(Context::class.java)) {
-            (specificContext ?: applicationContext) as T
-        } else {
-            modules.first {
-                type.isAssignableFrom(it.instance.javaClass) && name == it.name
-            }.instance as T
+        return when {
+            type.isAssignableFrom(Context::class.java) -> {
+                (specificContext ?: applicationContext) as T
+            }
+            type.isAssignableFrom(FragmentActivity::class.java) -> {
+                activity as T
+            }
+            type.isAssignableFrom(Fragment::class.java) -> {
+                fragment as T
+            }
+            else -> {
+                val instance = modules.first {
+                    (type.isAssignableFrom(it.clazz) && name == it.name)
+                }.instance
+
+                if (instance is Lazy<*>) instance.value as T
+                else instance as T
+            }
         }
     }
-
 }
 
-data class ProvidedObject(val instance: Any, val name: String = "")
+class ProvidedObject(val instance: Any, val name: String = "", clazz: Class<*>? = null) {
+    val clazz = clazz ?: instance::class.java
+}
